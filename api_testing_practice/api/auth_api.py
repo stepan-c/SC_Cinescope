@@ -30,3 +30,7 @@ class AuthAPI(CustomRequester):
             expected_status=200
         )
 
+    def auth(self):
+        token = self.login_admin().json()['accessToken']
+        self.session.headers.update({'Authorization': f"Bearer {token}"})
+
