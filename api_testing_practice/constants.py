@@ -32,7 +32,6 @@ def movies_data():
         "published": True,
         "genreId": None,
         "createdAt": "asc",
-
     }
 
 def fake_movies_data():
@@ -45,6 +44,16 @@ def fake_movies_data():
         "published": True,
         "genreId": None,
         "createdAt": "asc",
+    }
 
+def patch_movie_data():
+    return {
+        "name": "Stepan_movie_man",
+        "imageUrl": "https://example.com/image.png",
+        "price": 1000,
+        "description": "Настоящий фильм",
+        "location": "SPB",
+        "published": True,
+        "genreId": 1
     }
 

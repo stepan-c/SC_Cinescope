@@ -32,7 +32,7 @@ from api_testing_practice.utils.data_generator import DataGenerator
 
 
 def test_get_movie_from_id(api_manager):
-    movie_id = 8974
+    movie_id = 8975
 
     get_movie = api_manager.movie_api.get_movies_from_id(movie_id=movie_id)
 

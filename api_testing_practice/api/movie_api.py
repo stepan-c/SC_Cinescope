@@ -1,6 +1,6 @@
 #movie_api.py
 from api_testing_practice.custom_requester.custom_requester import CustomRequester
-from api_testing_practice.constants import CREATE_URL, MOVIES_ENDPOINT, movies_data
+from api_testing_practice.constants import CREATE_URL, MOVIES_ENDPOINT, movies_data, patch_movie_data
 
 
 class MoviesApi(CustomRequester):
@@ -33,6 +33,14 @@ class MoviesApi(CustomRequester):
             endpoint=MOVIES_ENDPOINT,
             movie_id=movie_id,
             expected_status=expected_status
+        )
+
+    def patch_movies(self,movie_id, data, expected_status=200):
+        return self.send_request_from_id(
+            method="PATCH",
+            endpoint=MOVIES_ENDPOINT,
+            movie_id=movie_id,
+            data=patch_movie_data()
         )
 
 
