@@ -1,3 +1,4 @@
+#conftest.py
 import pytest
 import requests
 from api_testing_practice.api.api_manager import ApiManager
