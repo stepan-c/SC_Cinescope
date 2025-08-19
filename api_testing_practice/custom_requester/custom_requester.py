@@ -1,5 +1,7 @@
 #custom_requester.py
 import requests
+import logging
+
 
 class CustomRequester:
     def __init__(self, session, base_url):
@@ -9,25 +11,16 @@ class CustomRequester:
             "Content-Type": "application/json",
             "Accept": "application/json"
         })
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
 
-    def send_request(self, method, endpoint, data=None, expected_status=200):
-        url = f"{self.base_url}{endpoint}"
+    def send_request(self, method, endpoint, params=None, data=None, expected_status=200):
         response = self.session.request(
             method=method,
-            url=url,
+            url=f"{self.base_url}{endpoint}",
+            params=params,
             json=data
-        )
 
-        assert response.status_code == expected_status, \
-            f"Ожидали статус {expected_status}, но получили {response.status_code}"
-        return response
-
-    def send_request_from_id(self, method, endpoint, movie_id, data=None, expected_status=200):
-        url = f"{self.base_url}{endpoint}/{movie_id}"
-        response = self.session.request(
-            method=method,
-            url=url,
-            json=data
         )
 
         assert response.status_code == expected_status, \

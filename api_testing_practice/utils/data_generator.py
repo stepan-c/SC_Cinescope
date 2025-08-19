@@ -8,9 +8,6 @@ class DataGenerator:
     def generator_email():
         return DataGenerator.faker.unique.email()
 
-    @staticmethod
-    def password_generator():
-        return "12345678Aa"
 
     @staticmethod
     def name_generator():
@@ -41,3 +38,14 @@ class DataGenerator:
             "genreId": 1
         }
 
+    @staticmethod
+    def patch_movie_data():
+        return {
+            "name": "Stepan" + DataGenerator.name_generator(),
+            "imageUrl": "https://example.com/image.png",
+            "price": 1000,
+            "description": "Настоящий фильм",
+            "location": "SPB",
+            "published": True,
+            "genreId": 1
+        }
