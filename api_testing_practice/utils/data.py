@@ -20,3 +20,14 @@ def filter_data():
         ("published", "true"),
         ("createdAt", "asc")
     ]
+
+def fake_filter_data():
+    return [
+        ("pageSize", 10),
+        ("page", 1),
+        ("minPrice", 1),
+        ("maxPrice", 1000),
+        ("locations", "GZP"),
+        ("published", "true"),
+        ("createdAt", "asc")
+    ]
