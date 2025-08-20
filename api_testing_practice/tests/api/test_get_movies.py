@@ -1,30 +1,29 @@
-from api_testing_practice.api.movie_api import MoviesApi
-from api_testing_practice.api.auth_api import AuthAPI
-from api_testing_practice.constants import movies_data, fake_movies_data
-import requests
-import pytest
+from api_testing_practice.conftest import api_manager
+from api_testing_practice.utils.data import filter_data
 
-def test_get_movies():
-    session = requests.Session()
 
-    auth_api = AuthAPI(session)
-    response = auth_api.login_admin()
+def test_get_movie_from_id(api_manager):
+    movie_id = 9420
 
-    movies_api = MoviesApi(session)
-    response = movies_api.get_movies(movies_data=movies_data())
+    get_movie = api_manager.movie_api.get_movies(movie_id=movie_id).json()
 
-    assert response.status_code == 200
+    assert get_movie['id'] == movie_id
 
-def test_get_fake_movies():
-    session = requests.Session()
 
-    auth_api = AuthAPI(session)
-    response = auth_api.login_admin()
+def test_get_fake_movies_from_id(api_manager):
+    movie_id = 9999
 
-    movies_api = MoviesApi(session)
-    response = movies_api.get_movies(movies_data=fake_movies_data())
+    api_manager.movie_api.get_movies(movie_id=movie_id, expected_status=404)
 
-    assert response.status_code in (400,401,404)
+
+def test_filter_movies(api_manager):
+    api_manager.movie_api.get_movies(params=filter_data())
+
+
+
+
+
+
 
 
 

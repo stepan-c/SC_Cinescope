@@ -22,11 +22,8 @@ class AuthAPI(CustomRequester):
             expected_status=200
         )
 
-    def login_admin(self):
-        return self.send_request(
-            method="POST",
-            endpoint=LOGIN_ENDPOINT,
-            data=ADMIN_DATA,
-            expected_status=200
-        )
+
+    def auth(self):
+        token = self.login_user(login_data=ADMIN_DATA).json()['accessToken']
+        self.session.headers.update({'Authorization': f"Bearer {token}"})
 

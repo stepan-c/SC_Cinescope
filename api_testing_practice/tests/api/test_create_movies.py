@@ -1,38 +1,14 @@
-#test_create_movies.py
-from api_testing_practice.api.movie_api import MoviesApi
-from api_testing_practice.api.auth_api import AuthAPI
-from api_testing_practice.constants import film_data
 from api_testing_practice.utils.data_generator import DataGenerator
-import requests
-import pytest
+from api_testing_practice.conftest import api_manager
 
-def test_create_movies():
-    session = requests.Session()
-    auth_api = AuthAPI(session)
 
-    response = auth_api.login_admin()
-    token = response.json()['accessToken']
+def test_create_movies(api_manager):
+    random_data = DataGenerator.generator_film_data()
 
-    movie_api = MoviesApi(session)
-    movie_api.headers['Authorization'] = f"Bearer {token}"
+    s = api_manager.movie_api.create_movies(movie_data=random_data)
+    movie_id = s.json()['id']
 
-    response = movie_api.create_movies(movie_data=DataGenerator.generator_film_data())
-    assert response.status_code == 201
-    print("Фильм успешно создан")
-
-# def test_create_fake_movies():
-#     session = requests.Session()
-#     auth_api = AuthAPI(session)
-#
-#     response = auth_api.login_admin()
-#     token = response.json()['accessToken']
-#
-#     movie_api = MoviesApi(session)
-#     movie_api.headers['Authorization'] = f"Bearer {token}"
-#
-#     response = movie_api.create_movies(movie_data=film_data())
-#     assert response.status_code in (400,401,409)
-#     print("Фильм не создан, название уже занято!")
-
+    assert movie_id, f"Фильм не создан, ошибка:{s.status_code}"
+    print(f"Создан фильм с id: {movie_id}")
 
 

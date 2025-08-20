@@ -1,25 +1,18 @@
-#test_auth
-from api_testing_practice.api.auth_api import AuthAPI
 from api_testing_practice.utils.data_generator import DataGenerator
-import requests
-import pytest
+from api_testing_practice.constants import ADMIN_DATA
+from api_testing_practice.conftest import api_manager
 
-def test_register_user():
-    session = requests.Session()
-    auth_api = AuthAPI(session)
+
+def test_register_user(api_manager):
 
     user_data = DataGenerator.generate_user_data()
 
-    response = auth_api.register_user(user_data)
-    print(response.status_code)
-    print(response.text)
-    assert response.status_code == 201
+    api_manager.auth_api.register_user(user_data)
 
-def test_login_admin():
-    session = requests.Session()
-    auth_api = AuthAPI(session)
 
-    response = auth_api.login_admin()
+def test_login_admin(api_manager):
+
+    response = api_manager.auth_api.login_user(login_data=ADMIN_DATA)
 
     assert response.status_code == 200
     body = response.json()
