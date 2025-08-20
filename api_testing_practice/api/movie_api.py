@@ -16,7 +16,7 @@ class MoviesApi(CustomRequester):
         )
 
 
-    def get_movies(self, params=None, movie_id=None, expected_status=200):
+    def get_movies(self, params=None, movie_id='', expected_status=200):
         return self.send_request(
             method="GET",
             params=params,

@@ -9,27 +9,14 @@ def film_data():
         "genreId": 1
     }
 
-def movies_data():
-    return {
-        "pageSize": 10,
-        "page": 1,
-        "minPrice": 1,
-        "maxPrice": 1000,
-        "locations": "SPB",
-        "published": True,
-        "genreId": None,
-        "createdAt": "asc",
-    }
 
-def fake_movies_data():
-    return {
-        "pageSize": 10,
-        "page": 1,
-        "minPrice": 1,
-        "maxPrice": 1000,
-        "locations": "GZN",
-        "published": True,
-        "genreId": None,
-        "createdAt": "asc",
-    }
-
+def filter_data():
+    return [
+        ("pageSize", 10),
+        ("page", 1),
+        ("minPrice", 1),
+        ("maxPrice", 1000),
+        ("locations", "SPB"),
+        ("published", "true"),
+        ("createdAt", "asc")
+    ]
