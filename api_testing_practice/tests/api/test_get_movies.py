@@ -1,5 +1,5 @@
 from api_testing_practice.conftest import api_manager
-from api_testing_practice.utils.data import filter_data
+from api_testing_practice.utils.data import filter_data,fake_filter_data
 
 
 def test_get_movie_from_id(api_manager):
@@ -18,6 +18,10 @@ def test_get_fake_movies_from_id(api_manager):
 
 def test_filter_movies(api_manager):
     api_manager.movie_api.get_movies(params=filter_data())
+
+
+def test_fake_filter_movies(api_manager):
+    api_manager.movie_api.get_movies(params=fake_filter_data(), expected_status=400)
 
 
 
