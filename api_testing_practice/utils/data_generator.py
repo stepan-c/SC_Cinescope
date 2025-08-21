@@ -49,3 +49,27 @@ class DataGenerator:
             "published": True,
             "genreId": 1
         }
+
+    @staticmethod
+    def generator_fake_film_data():
+        return {
+            "name": DataGenerator.film_generator(),
+            "imageUrl": "https://example.com/image.png",
+            "price": 300,
+            "description": "Фальшивый фильм",
+            "location": "GBZ",
+            "published": True,
+            "genreId": 1
+        }
+
+    @staticmethod
+    def patch_fake_movie_data():
+        return {
+            "name": "Stepan" + DataGenerator.name_generator(),
+            "imageUrl": "https://example.com/image.png",
+            "price": 1000,
+            "description": "Настоящий фильм",
+            "location": "GBZ",
+            "published": True,
+            "genreId": 1
+        }
