@@ -12,3 +12,7 @@ def test_create_movies(api_manager):
     print(f"Создан фильм с id: {movie_id}")
 
 
+def test_create_fake_movies(api_manager):
+    fake_data = DataGenerator.generator_fake_film_data()
+
+    api_manager.movie_api.create_movies(movie_data=fake_data,expected_status=400)

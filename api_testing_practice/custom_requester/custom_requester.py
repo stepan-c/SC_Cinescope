@@ -1,6 +1,6 @@
 #custom_requester.py
+import pytest
 import requests
-import logging
 
 
 class CustomRequester:
@@ -11,19 +11,31 @@ class CustomRequester:
             "Content-Type": "application/json",
             "Accept": "application/json"
         })
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.INFO)
+
 
     def send_request(self, method, endpoint, params=None, data=None, expected_status=200):
+
+        print(f"Отправляю: {method} запрос на: {endpoint}")
+
+        if data:
+            print(f"Отправляю data: {data}")
+        if params:
+            print(f"Отправляю params: {params}")
+
         response = self.session.request(
             method=method,
             url=f"{self.base_url}{endpoint}",
             params=params,
             json=data
-
         )
+        print(f"Получил ответ:{response.status_code}")
 
-        assert response.status_code == expected_status, \
-            f"Ожидали статус {expected_status}, но получили {response.status_code}"
+        if response.status_code != expected_status:
+            print(f"Текст ошибки: {response.text}")
+            pytest.fail(f"Ожидали статус {expected_status}, но получили {response.status_code}")
+        else:
+            print("Успех!")
+
         return response
+
 

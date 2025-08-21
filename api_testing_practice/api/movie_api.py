@@ -25,11 +25,12 @@ class MoviesApi(CustomRequester):
         )
 
 
-    def patch_movies(self, movie_id, movie_data):
+    def patch_movies(self, movie_id, movie_data, expected_status=200):
         return self.send_request(
             method="PATCH",
             endpoint=MOVIES_ENDPOINT+f"/{movie_id}",
-            data=movie_data
+            data=movie_data,
+            expected_status=expected_status
         )
 
     def delete_movies(self, movie_id, expected_status=200):
