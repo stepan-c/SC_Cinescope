@@ -23,7 +23,14 @@ class AuthAPI(CustomRequester):
         )
 
 
-    def auth(self):
-        token = self.login_user(login_data=ADMIN_DATA).json()['accessToken']
+    def auth(self, creds=None):
+        if creds:
+            login_data = {
+            "email": creds[0],
+            "password": creds[1]
+            }
+        else:
+            login_data = ADMIN_DATA
+        token = self.login_user(login_data=login_data).json()['accessToken']
         self.session.headers.update({'Authorization': f"Bearer {token}"})
 

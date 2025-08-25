@@ -1,12 +1,15 @@
 #data_generator
 from faker import Faker
+from api_testing_practice.utils.roles import Roles
+
 
 class DataGenerator:
     faker = Faker("ru_RU")
 
     @staticmethod
     def generator_email():
-        return DataGenerator.faker.unique.email()
+        random_chars = ''.join(DataGenerator.faker.random_letters(length=4)).lower()
+        return f"{random_chars}@email.com"
 
 
     @staticmethod
@@ -19,7 +22,8 @@ class DataGenerator:
             "email": DataGenerator.generator_email(),
             "fullName": DataGenerator.name_generator(),
             "password": "12345678Aa",
-            "passwordRepeat": "12345678Aa"
+            "passwordRepeat": "12345678Aa",
+            "roles": [Roles.USER.value]
         }
 
     @staticmethod

@@ -31,3 +31,7 @@ def fake_filter_data():
         ("published", "true"),
         ("createdAt", "asc")
     ]
+
+class SuperAdminCreds:
+    USERNAME = 'api1@gmail.com'
+    PASSWORD = 'asdqwe123Q'

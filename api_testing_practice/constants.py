@@ -4,6 +4,7 @@ CREATE_URL = "https://api.dev-cinescope.coconutqa.ru"
 REGISTER_ENDPOINT = "/register"
 LOGIN_ENDPOINT = "/login"
 MOVIES_ENDPOINT = "/movies"
+USER_ENDPOINT = "/user"
 
 ADMIN_DATA = {
     "email": "api1@gmail.com",
