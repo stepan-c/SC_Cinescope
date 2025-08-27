@@ -1,3 +1,7 @@
+import os
+from dotenv import load_dotenv
+
+
 def film_data():
     return {
         "name": "qwe",
@@ -25,13 +29,14 @@ def fake_filter_data():
     return [
         ("pageSize", 10),
         ("page", 1),
-        ("minPrice", 1),
+        ("minPrice", 10000),
         ("maxPrice", 1000),
         ("locations", "GZP"),
         ("published", "true"),
         ("createdAt", "asc")
     ]
 
+load_dotenv()
 class SuperAdminCreds:
-    USERNAME = 'api1@gmail.com'
-    PASSWORD = 'asdqwe123Q'
+    USERNAME = os.getenv('SUPER_ADMIN_USERNAME')
+    PASSWORD = os.getenv('SUPER_ADMIN_PASSWORD')

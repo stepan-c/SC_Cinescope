@@ -1,6 +1,6 @@
-from api_testing_practice.conftest import api_manager
+from api_testing_practice.conftest import api_manager, super_admin
 from api_testing_practice.conftest import create_movie
-
+import pytest
 
 def test_del_movies(api_manager, create_movie, super_admin):
     response = super_admin.api.movie_api.delete_movies(movie_id=create_movie).json()

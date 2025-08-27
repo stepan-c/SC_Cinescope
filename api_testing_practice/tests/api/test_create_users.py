@@ -1,4 +1,7 @@
 #test_create_users.py
+import pytest
+
+
 class TestUser:
 
     def test_create_user(self,super_admin,create_super_user):
@@ -8,6 +11,7 @@ class TestUser:
         assert a.get('verified') == True
         assert a.get('email') == create_super_user['email']
 
+    @pytest.mark.slow
     def test_get_user_by_location(self, super_admin, create_user_data):
         s = super_admin.api.user_api.get_user(user_location=create_user_data['email']).json()
 

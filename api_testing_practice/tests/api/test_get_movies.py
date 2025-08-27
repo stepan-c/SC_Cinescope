@@ -1,5 +1,15 @@
 from api_testing_practice.conftest import api_manager
 from api_testing_practice.utils.data import filter_data,fake_filter_data
+import pytest
+
+
+@pytest.mark.parametrize("params,expected_status",
+                        [(filter_data(), 200),
+                        (fake_filter_data(), 400)],
+                        ids=['Позитивный тест', 'Негативный тест'])
+def test_filter(api_manager, params, expected_status):
+
+    api_manager.movie_api.get_movies(params=params, expected_status=expected_status)
 
 
 def test_get_movie_from_id(api_manager, admin):
@@ -10,18 +20,11 @@ def test_get_movie_from_id(api_manager, admin):
     assert get_movie['id'] == movie_id
 
 
+@pytest.mark.slow
 def test_get_fake_movies_from_id(api_manager, admin):
     movie_id = 9999
 
     admin.api.movie_api.get_movies(movie_id=movie_id, expected_status=404)
-
-
-def test_filter_movies(api_manager, admin):
-    admin.api.movie_api.get_movies(params=filter_data())
-
-
-def test_fake_filter_movies(api_manager, admin):
-    admin.api.movie_api.get_movies(params=fake_filter_data(), expected_status=400)
 
 
 

@@ -29,6 +29,7 @@ class CustomRequester:
             json=data
         )
         print(f"Получил ответ:{response.status_code}")
+        print(f"Получил ответ:{response.json()}")
 
         if response.status_code != expected_status:
             print(f"Текст ошибки: {response.text}")
