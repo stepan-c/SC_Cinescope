@@ -1,5 +1,7 @@
+#api_manager.py
 from api_testing_practice.api.movie_api import MoviesApi
 from api_testing_practice.api.auth_api import AuthAPI
+from api_testing_practice.api.user_api import UserApi
 from api_testing_practice.constants import ADMIN_DATA
 
 
@@ -7,7 +9,11 @@ class ApiManager:
     def __init__(self, session):
         self.auth_api = AuthAPI(session)
         self.movie_api = MoviesApi(session)
+        self.user_api = UserApi(session)
         self.session = session
+
+    def close_session(self):
+        self.session.close()
 
 
 if __name__ == "__main__":
