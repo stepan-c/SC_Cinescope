@@ -1,14 +1,11 @@
-from api_testing_practice.utils.data_generator import DataGenerator
 from api_testing_practice.constants import ADMIN_DATA
 from api_testing_practice.conftest import api_manager
 import pytest
 
+
 @pytest.mark.slow
-def test_register_user(api_manager,common_user):
-
-    user_data = DataGenerator.generate_user_data()
-
-    common_user.api.auth_api.register_user(user_data)
+def test_register_user(registered_user, test_user):
+    assert registered_user.email == test_user.email, "Email не совпадает"
 
 
 def test_login_admin(api_manager,admin):

@@ -2,6 +2,7 @@
 import pytest
 import requests
 from api_testing_practice.api.api_manager import ApiManager
+from api_testing_practice.models.base_models import TestUser, RegisterUserResponse
 from api_testing_practice.utils.data_generator import DataGenerator
 from api_testing_practice.utils.data import SuperAdminCreds
 from api_testing_practice.utils.roles import Roles
@@ -24,10 +25,38 @@ def create_movie(api_manager):
     return create_movie_id
 
 @pytest.fixture()
-def create_user_data(api_manager):
-    user_data = DataGenerator.generate_user_data()
-    api_manager.auth_api.register_user(user_data)
-    return user_data
+def test_user() -> TestUser:
+    random_password = DataGenerator.password_generator()
+    return TestUser(
+        email=DataGenerator.generator_email(),
+        fullName=DataGenerator.name_generator(),
+        password=random_password,
+        passwordRepeat=random_password,
+        roles=[Roles.USER]
+    )
+
+
+@pytest.fixture()
+def registered_user(api_manager, test_user):
+    user_data = test_user.model_dump()
+    user_data.update({
+        "verified": True,
+        "banned": False
+    })
+    response = api_manager.auth_api.register_user(user_data=user_data)
+    return RegisterUserResponse(**response.json())
+
+
+@pytest.fixture()
+def created_user(super_admin, test_user):
+    user_data = test_user.model_dump()
+    user_data.update({
+        "verified": True,
+        "banned": False
+    })
+
+    response = super_admin.api.user_api.create_user(user_data)
+    return response.json()
 
 @pytest.fixture()
 def user_session():
@@ -71,8 +100,8 @@ def admin(user_session):
     return admin
 
 @pytest.fixture(scope='function')
-def create_super_user():
-    new_data = DataGenerator.generate_user_data()
+def create_super_user(test_user):
+    new_data = test_user.model_dump()
     new_data.update({
         "verified": True,
         "banned": False
@@ -87,14 +116,12 @@ def common_user(user_session,super_admin,create_super_user):
         create_super_user['email'],
         create_super_user['password'],
         list(Roles.USER.value),
-        new_session)
+        new_session
+    )
 
     super_admin.api.user_api.create_user(create_super_user)
     common_user.api.auth_api.auth(common_user.creds)
     return common_user
-
-
-
 
 
 
