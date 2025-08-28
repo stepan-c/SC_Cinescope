@@ -1,6 +1,5 @@
 #data_generator
 from faker import Faker
-from api_testing_practice.utils.roles import Roles
 
 
 class DataGenerator:
@@ -17,14 +16,15 @@ class DataGenerator:
         return DataGenerator.faker.name()
 
     @staticmethod
-    def generate_user_data():
-        return {
-            "email": DataGenerator.generator_email(),
-            "fullName": DataGenerator.name_generator(),
-            "password": "12345678Aa",
-            "passwordRepeat": "12345678Aa",
-            "roles": [Roles.USER.value]
-        }
+    def password_generator():
+        password = DataGenerator.faker.password(
+            length=12,
+            special_chars=False,
+            digits=True,
+            upper_case=True,
+            lower_case=True
+        )
+        return password
 
     @staticmethod
     def film_generator():
