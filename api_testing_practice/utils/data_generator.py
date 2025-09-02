@@ -25,6 +25,10 @@ class DataGenerator:
             lower_case=True
         )
         return password
+    @staticmethod
+    def generator_numbers():
+        random_numbers = DataGenerator.faker.random_number(digits=4,fix_len= True)
+        return random_numbers
 
     @staticmethod
     def film_generator():

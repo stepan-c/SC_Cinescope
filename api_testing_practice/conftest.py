@@ -1,4 +1,7 @@
 #conftest.py
+import uuid
+from datetime import datetime
+
 import pytest
 import requests
 from api_testing_practice.api.api_manager import ApiManager
@@ -7,6 +10,9 @@ from api_testing_practice.utils.data_generator import DataGenerator
 from api_testing_practice.utils.data import SuperAdminCreds
 from api_testing_practice.utils.roles import Roles
 from entities.user import User
+from db_requester.models import UserDBModel
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 
 @pytest.fixture()
@@ -123,7 +129,42 @@ def common_user(user_session,super_admin,create_super_user):
     common_user.api.auth_api.auth(common_user.creds)
     return common_user
 
+HOST = "80.90.191.123"
+PORT = 31200
+DATABASE_NAME = "db_movies"
+USERNAME = "postgres"
+PASSWORD = "AmwFrtnR2"
 
+engine = create_engine(f"postgresql+psycopg2://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DATABASE_NAME}") # Создаем движок (engine) для подключения к базе данных
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) # Создаем фабрику сессий
+
+@pytest.fixture(scope="module")
+def db_session():
+
+    session = SessionLocal()
+    test_user_id = str(uuid.uuid4())
+    # Создаем тестовые данные
+    test_user = UserDBModel(
+        id=test_user_id,
+        email = DataGenerator.generator_email(),
+        full_name = DataGenerator.name_generator(),
+        password = DataGenerator.password_generator(),
+        created_at = datetime.now(),
+        updated_at = datetime.now(),
+        verified = False,
+        banned = False,
+        roles = "{USER}"
+    )
+
+    session.add(test_user) #добавляем обьект в базу данных
+    session.commit() #сохраняем изменения для всех остальных подключений
+
+    yield session, test_user # можете запустить тесты в дебаг режиме и поставить тут брекпойнт
+                  # зайдите в базу и убедитесь что новый обьект был создан
+
+    session.delete(test_user) # Удаляем тестовые данные
+    session.commit() # сохраняем изменения для всех остальных подключений
+    session.close() #завершем сессию (отключаемся от базы данных)
 
 
 
