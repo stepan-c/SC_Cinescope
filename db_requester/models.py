@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, String, Boolean, DateTime, text, Integer, ForeignKey
-from sqlalchemy.orm import declarative_base, sessionmaker, Session
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 host = "80.90.191.123"
 port = 31200

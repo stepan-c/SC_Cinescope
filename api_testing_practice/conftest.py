@@ -156,15 +156,15 @@ def db_session():
         roles = "{USER}"
     )
 
-    session.add(test_user) #добавляем обьект в базу данных
-    session.commit() #сохраняем изменения для всех остальных подключений
+    session.add(test_user)
+    session.commit()
 
     yield session, test_user # можете запустить тесты в дебаг режиме и поставить тут брекпойнт
                   # зайдите в базу и убедитесь что новый обьект был создан
 
-    session.delete(test_user) # Удаляем тестовые данные
-    session.commit() # сохраняем изменения для всех остальных подключений
-    session.close() #завершем сессию (отключаемся от базы данных)
+    session.delete(test_user)
+    session.commit()
+    session.close()
 
 
 
